@@ -13,24 +13,29 @@ variables:
   buildConfiguration: 'Release'
 
 stages:
-  - stage: restore
-    jobs:
-    - job:   
-      steps:
-        - task: DotNetCoreCLI@2
-          inputs:
-            command: 'restore'
-            projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
-            feedsToUse: 'select'
   - stage: build
     jobs:
-    - job:   
+    - job: build  
       steps:
         - task: DotNetCoreCLI@2
           inputs:
             command: 'build'
             projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
-    - job:
+  - stage: test
+    jobs:
+    - job: test1  
       steps:
-        - bash: echo "Hello World!"
+        - bash: echo "Executing Test set 1"
+    - job: test2
+      steps:
+        - bash: echo "Executing Test set 2"
+  - stage: publish
+    jobs:
+    - job: publish
+      steps:
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'webApp'
+            publishLocation: 'Container'
 
