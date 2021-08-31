@@ -12,10 +12,25 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
-steps:
-  - task: DotNetCoreCLI@2
-    inputs:
-      command: 'restore'
-      projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
-      feedsToUse: 'select'
+stages:
+  - stage: restore
+    jobs:
+    - job:   
+      steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'restore'
+            projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
+            feedsToUse: 'select'
+  - stage: build
+    jobs:
+    - job:   
+      steps:
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
+    - job:
+      steps:
+        - bash: echo "Hello World!"
 
