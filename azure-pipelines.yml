@@ -32,10 +32,10 @@ stages:
     jobs:
     - job: test1  
       steps:
-        - bash: echo "Executing Test set 1"
+        - script: echo "Executing Test set 1"
     - job: test2
       steps:
-        - bash: echo "Executing Test set 2"
+        - script: echo "Executing Test set 2"
   - stage: publish
     jobs:
     - job: publish
