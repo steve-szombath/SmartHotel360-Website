@@ -7,7 +7,8 @@ trigger:
 - master
 
 pool:
-  vmImage: ubuntu-latest
+  demands:
+  - myCustomCapability
 
 variables:
   buildConfiguration: 'Release'
