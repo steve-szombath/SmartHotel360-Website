@@ -6,7 +6,8 @@
 trigger:
 - master
 
-pool:
+pool: 
+  name: developer-desktop-machines
   demands:
   - myCustomCapability
 
