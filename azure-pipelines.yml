@@ -1,0 +1,46 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool: 
+  name: azure-agent-pool
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+  - stage: build
+    jobs:
+    - job: build  
+      steps:
+        - task: UseDotNet@2
+          displayName: 'Use .NET Core sdk 2.1.403'
+          inputs:
+            version: 2.1.403
+
+        - task: DotNetCoreCLI@2
+          inputs:
+            command: 'build'
+            projects: 'Source/SmartHotel360.Website/SmartHotel360.Website.csproj'
+  - stage: test
+    jobs:
+    - job: test1  
+      steps:
+        - script: echo "Executing Test set 1"
+    - job: test2
+      steps:
+        - script: echo "Executing Test set 2"
+  - stage: publish
+    jobs:
+    - job: publish
+      steps:
+        - task: PublishBuildArtifacts@1
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'webApp'
+            publishLocation: 'Container'
+
